@@ -2,6 +2,7 @@
 # Script used to encrypt a file using a lot of layers
 # Dependencies are in modules
 # Usage: "./lol.sh nameoffiletoencrypt" will encrypt a file and generate a script to decrypt it
+# V0.1 Core functions work, but only 3DES lolmod is properly implemented
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
