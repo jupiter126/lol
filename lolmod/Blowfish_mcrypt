@@ -1,0 +1,15 @@
+#!/bin/bash
+dependencies="mcrypt"
+f_dependency
+function f_cypher_Blowfish_mcrypt {
+####################   CRYPT   ####################
+echo "crypting file using with Blowfish - mcrypt"
+f_randpass 400 0
+mcrypt $filename -k $frandom -a blowfish
+mv $filename.nc $filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using Blowfish - mcrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $directory/$filename $directory/$filename.nc" >> $directory/$filename-keys/$layer
+echo "mcrypt -d $filename.nc -k $frandom -a blowfish" >> $directory/$filename-keys/$layer
+echo "rm $filename.nc" >> $directory/$filename-keys/$layer
+}
