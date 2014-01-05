@@ -1,0 +1,12 @@
+function f_cypher_RSA {
+filename=$1
+echo RSA >> ciphers.txt
+if [ "$action" = "crypt" ]; then
+        echo "crypting file using using $cypher"
+        ssh-keygen -t rsa -b $rsabits -C "$(whoami)@$(hostname)-$(date +%Y%m%d)" -f $filename-keys/layer-$1_key -N ""
+        ssh-keygen -f $filename-keys/layer-$1_key.pub -e -m PKCS8 > $filename-keys/layer-$1_key.pem.pub
+        openssl rsautl -encrypt -inkey $filename-keys/layer-$1_key.pem.pub -pubin -in $directory/$filename-layer-$(( $1 - 1 )) -out $directory/$filename-layer-$1
+elif [ "$action" = "$decrypt" ]; then
+        echo "decrypting file using using des3"
+fi
+}

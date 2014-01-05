@@ -1,0 +1,11 @@
+function f_cypher_AES {
+echo AES >> ciphers.txt
+openssl enc -aes-256-cbc -k secret -P -md sha1
+
+aes -e -b -s "Encrypted me" -p password
+hq6kK1M5d5x45DCF7pmELXUzW3ARHV9A/zJcTw==
+
+aes -d -b -s "hq6kK1M5d5x45DCF7pmELXUzW3ARHV9A/zJcTw==" -p password
+Encrypted me
+}
+

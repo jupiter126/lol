@@ -1,0 +1,14 @@
+#!/bin/bash
+echo 3DES_openssl >> ciphers.txt
+function f_cypher_3DES_openssl {
+####################   CRYPT   ####################
+echo "crypting file using using 3des"
+f_randpass 256 0
+openssl des3 -salt -pass pass:$frandom -in "test" -out "test.3des"
+mv $filename.3des $filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using 3des\"" >> $directory/$filename-keys/$layer
+echo "openssl des3 -d -salt -pass pass:$frandom -in \"$filename\" -out \"$filename.decrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $filename.decrypt $filename" >> $directory/$filename-keys/$layer
+}
+echo "module $lolmod loaded"

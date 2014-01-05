@@ -1,0 +1,3 @@
+function f_cypher_Serpent {
+echo Serpent >> ciphers.txt
+}
