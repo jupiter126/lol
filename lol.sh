@@ -17,7 +17,7 @@ if [ -f $directory/ciphers.txt ]; then
 	rm $directory/ciphers.txt # clean cipher list
 fi
 
-function f_dependency {
+function f_dependency { # from http://www.snabelb.net/content/bash_support_function_check_dependencies
 deps_ok=YES
 for program in $dependencies
 do
