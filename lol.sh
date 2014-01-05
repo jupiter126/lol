@@ -1,8 +1,9 @@
 #!/bin/bash
 # Script used to encrypt a file using a lot of layers
-# Dependencies are in modules
+# requires shred and gpg for secure mode, other dependencies are in modules
 # Usage: "./lol.sh nameoffiletoencrypt" will encrypt a file and generate a script to decrypt it
-# V0.1 Core functions work, but only 3DES lolmod is properly implemented
+# 0.1 Core functions work, but only 3DES_openssl lolmod is properly implemented
+# 0.1.1 Implemented dependency check in 3DES_openssl
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
@@ -12,14 +13,36 @@ if [[ -z "$filename" ]]; then
 	exit;
 fi
 
-rm $directory/ciphers.txt # clean cipher list
+if [ -f $directory/ciphers.txt ]; then
+	rm $directory/ciphers.txt # clean cipher list
+fi
+
+function f_dependency {
+deps_ok=YES
+for program in $dependencies
+do
+	if ! which $program &>/dev/null;  then
+		deps_ok=NO
+		echo "$program not installed, module $lolmod not loaded"
+fi
+done
+if [ "$deps_ok" = "YES" ]; then
+		echo $lolmod >> $directory/ciphers.txt && echo "$lolmod activated"
+		echo "All dependencies found, module $lolmod activated"
+fi
+}
 
 for lolmod in $(ls $directory/lolmod); #load ciphers (each cipher must add itself to the list)
 do
 	source $directory/lolmod/$lolmod
 done
 
-methods=$(cat $directory/ciphers.txt|wc -l)
+if [ -f $directory/ciphers.txt ]; then
+	methods=$(cat $directory/ciphers.txt|wc -l)
+else
+	echo "No lolmod loaded, Aborting"
+	exit;
+fi
 
 function f_randpass { # generates a "random" string from /dev/urandom --> this is not optimal!
 #  $1 = number of characters; defaults to 32
@@ -62,4 +85,3 @@ if [ "$securemode" = "1" ]; then # To secure key script, use:
 fi
 }
 f_main
-

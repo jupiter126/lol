@@ -1,5 +1,6 @@
 #!/bin/bash
-echo 3DES_openssl >> ciphers.txt
+dependencies="openssl"
+f_dependency
 function f_cypher_3DES_openssl {
 ####################   CRYPT   ####################
 echo "crypting file using using 3des"
@@ -11,4 +12,3 @@ echo "echo \"decrypting layer $layer using using 3des\"" >> $directory/$filename
 echo "openssl des3 -d -salt -pass pass:$frandom -in \"$filename\" -out \"$filename.decrypt\"" >> $directory/$filename-keys/$layer
 echo "mv $filename.decrypt $filename" >> $directory/$filename-keys/$layer
 }
-echo "module $lolmod loaded"
