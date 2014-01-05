@@ -2,8 +2,9 @@
 # Script used to encrypt a file using a lot of layers
 # requires shred and gpg for secure mode, other dependencies are in modules
 # Usage: "./lol.sh nameoffiletoencrypt" will encrypt a file and generate a script to decrypt it
-# 0.1 Core functions work, but only 3DES_openssl lolmod is properly implemented
+# 0.1 	Core functions work, but only 3DES_openssl lolmod is properly implemented
 # 0.1.1 Implemented dependency check in 3DES_openssl
+# 0.2	Implemented Blowfish_mcrypt lolmod
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
@@ -27,8 +28,7 @@ do
 fi
 done
 if [ "$deps_ok" = "YES" ]; then
-		echo $lolmod >> $directory/ciphers.txt && echo "$lolmod activated"
-		echo "All dependencies found, module $lolmod activated"
+		echo $lolmod >> $directory/ciphers.txt && echo "dependencies found - $lolmod activated"
 fi
 }
 
