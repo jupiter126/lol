@@ -58,7 +58,7 @@ do
 done
 if [ "$securemode" = "1" ]; then # To secure key script, use:
 	echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
-	shred -n 15 $directory/$filename-decrypt.sh
+	shred -n 15 -u $directory/$filename-decrypt.sh
 fi
 }
 f_main
