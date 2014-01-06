@@ -13,9 +13,11 @@ While crypting the file, each module will generate the necessary line to decrypt
 Once the iteration is done, lol.sh compiles all decrypt lines in one key-script, and then cripts that key-script with a user provided password.
 
 Downsides:
+---
 - The encrypted files get much bigger
 - It is cpu intensive
 - As usual, if your computer is compromisde, if somebody steals your key, if you loose it,... it's pretty much game over for your data.
 
 Upsides:
+---
 - Only your imagination (and your cpu) limit how much you crypt your data.
