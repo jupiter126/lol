@@ -1,4 +1,0 @@
-function f_cypher_Blowfish_1 {
-echo Blowfish >> ciphers.txt
-bcrypt test something
-}

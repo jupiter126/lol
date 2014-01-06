@@ -1,0 +1,15 @@
+#!/bin/bash
+dependencies="mcrypt"
+f_dependency
+function f_cypher_Serpent_mcrypt {
+####################   CRYPT   ####################
+echo "crypting file using with Serpent - mcrypt"
+f_randpass 800 0
+mcrypt --no-openpgp -q $filename -k $frandom -a serpent 2>>/dev/null
+mv $filename.nc $filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using Serpent - mcrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $directory/$filename $directory/$filename.nc" >> $directory/$filename-keys/$layer
+echo "mcrypt --no-openpgp -q -d $filename.nc -k $frandom -a serpent 2>>/dev/null" >> $directory/$filename-keys/$layer
+echo "rm $filename.nc" >> $directory/$filename-keys/$layer
+}

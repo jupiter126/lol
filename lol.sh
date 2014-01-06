@@ -7,6 +7,7 @@
 # 0.2	Implemented Blowfish_mcrypt lolmod
 # 0.3	Implemented AES256 with aesutil - with and without base 64 encoding
 # 0.3.1	Implemented AES256 with openssl - with and without base 64 encoding
+# 0.4	Implemented Cast_256_mcrypt  LOKI97_mcrypt  Rijndael256_mcrypt  Saferplus_mcrypt  Serpent_mcrypt  Twofish_mcrypt  XTEA_mcrypt
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
