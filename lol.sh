@@ -5,6 +5,8 @@
 # 0.1 	Core functions work, but only 3DES_openssl lolmod is properly implemented
 # 0.1.1 Implemented dependency check in 3DES_openssl
 # 0.2	Implemented Blowfish_mcrypt lolmod
+# 0.3	Implemented AES256 with aesutil - with and without base 64 encoding
+# 0.3.1	Implemented AES256 with openssl - with and without base 64 encoding
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
@@ -83,5 +85,6 @@ if [ "$securemode" = "1" ]; then # To secure key script, use:
 	echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
 	shred -n 15 -u $directory/$filename-decrypt.sh
 fi
+rm ciphers.txt
 }
 f_main

@@ -1,0 +1,14 @@
+#!/bin/bash
+dependencies="openssl"
+f_dependency
+function f_cypher_AES256_openssl {
+####################   CRYPT   ####################
+echo "crypting file using using AES256_openssl"
+f_randpass 256 0
+openssl enc -aes-256-cbc -salt -pass pass:$frandom -in "test" -out "test.aes"
+mv $filename.aes $filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using AES256_openssl\"" >> $directory/$filename-keys/$layer
+echo "openssl enc -d -aes-256-cbc -pass pass:$frandom -in \"$filename\" -out \"$filename.decrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $filename.decrypt $filename" >> $directory/$filename-keys/$layer
+}
