@@ -5,10 +5,10 @@ function f_cypher_AES256_aes_base64 {
 ####################   CRYPT   ####################
 echo "crypting file using using AES256_aes_base64"
 f_randpass 255 0
-aes -e -b -p $frandom -f $directory/$filename -o $directory/$filename.aes
-mv $filename.aes $filename
+aes -e -b -p "$frandom" -f "$directory/$filename" -o "$directory/$filename.crypt"
+mv $filename.crypt $filename
 ###################   DECRYPT   ###################
 echo "echo \"decrypting layer $layer using using AES - aes Base64\"" >> $directory/$filename-keys/$layer
-echo "aes -d -b -p $frandom -f $directory/$filename -o $directory/$filename.decrypt" >> $directory/$filename-keys/$layer
+echo "aes -d -b -p \"$frandom\" -f \"$filename\" -o \"$filename.decrypt\"" >> $directory/$filename-keys/$layer
 echo "mv $filename.decrypt $filename" >> $directory/$filename-keys/$layer
 }

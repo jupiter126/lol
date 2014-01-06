@@ -7,7 +7,10 @@
 # 0.2	Implemented Blowfish_mcrypt lolmod
 # 0.3	Implemented AES256 with aesutil - with and without base 64 encoding
 # 0.3.1	Implemented AES256 with openssl - with and without base 64 encoding
-# 0.4	Implemented Cast_256_mcrypt  LOKI97_mcrypt  Rijndael256_mcrypt  Saferplus_mcrypt  Serpent_mcrypt  Twofish_mcrypt  XTEA_mcrypt
+# 0.4	Implemented Cast_256_mcrypt LOKI97_mcrypt Rijndael256_mcrypt Saferplus_mcrypt Serpent_mcrypt Twofish_mcrypt XTEA_mcrypt
+# 0.5	Implemented Camelia_256_openssl and ccrypt
+# 0.6	Ginat Bug-hunt \o/
+# 0.7	Added an entropy method with openssl for alternance with urandom
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
@@ -48,10 +51,18 @@ else
 fi
 
 function f_randpass { # generates a "random" string from /dev/urandom --> this is not optimal!
-#  $1 = number of characters; defaults to 32
-#  $2 = include special characters; 1 = yes, 0 = no; defaults to 1
-[ "$2" == "0" ] && CHAR="[:alnum:]" || CHAR="[:graph:]"
-frandom=$(cat /dev/urandom | tr -cd "$CHAR" | head -c ${1:-32})
+rem=$(( $layer % 2 ))
+if [ $rem -eq 0 ]
+then
+	#  $1 = number of characters; defaults to 32
+	#  $2 = include special characters; 1 = yes, 0 = no; defaults to 1
+	echo "$layer is even number"
+	[ "$2" == "0" ] && CHAR="[:alnum:]" || CHAR="[:graph:]"
+	frandom=$(cat /dev/urandom | tr -cd "$CHAR" | head -c ${1:-32})
+else
+	echo "$layer is odd number"
+	frandom=$(openssl rand $1|base64)
+fi
 }
 
 function f_main {
@@ -78,13 +89,16 @@ while [ "$nlayers" -le "$rounds" ]; do # The while only allows to do multiple ru
 done
 #build key
 echo "#!/bin/bash" > $directory/$filename-decrypt.sh
+echo "cp $filename $filename.crypted.backup" >> $directory/$filename-decrypt.sh
 for files in $(ls -t $directory/$filename-keys);
 do
 	cat $directory/$filename-keys/$files >> $directory/$filename-decrypt.sh
+	shred -n 8 -u $directory/$filename-keys/$files
 done
+rmdir $directory/$filename-keys
 if [ "$securemode" = "1" ]; then # To secure key script, use:
 	echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
-	shred -n 15 -u $directory/$filename-decrypt.sh
+	shred -n 8 -u $directory/$filename-decrypt.sh
 fi
 rm ciphers.txt
 }

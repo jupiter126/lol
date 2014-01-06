@@ -5,11 +5,11 @@ function f_cypher_Blowfish_mcrypt {
 ####################   CRYPT   ####################
 echo "crypting file using with Blowfish - mcrypt"
 f_randpass 400 0
-mcrypt -q $filename -k $frandom -a blowfish 2>>/dev/null
-mv $filename.nc $filename
+mcrypt -q "$directory/$filename" -k "$frandom" -a blowfish 2>>/dev/null
+mv $directory/$filename.nc $directory/$filename
 ###################   DECRYPT   ###################
 echo "echo \"decrypting layer $layer using using Blowfish - mcrypt\"" >> $directory/$filename-keys/$layer
-echo "mv $directory/$filename $directory/$filename.nc" >> $directory/$filename-keys/$layer
-echo "mcrypt -q -d $filename.nc -k $frandom -a blowfish" >> $directory/$filename-keys/$layer
+echo "mv $filename $filename.nc" >> $directory/$filename-keys/$layer
+echo "mcrypt -q -d \"$filename.nc\" -k \"$frandom\" -a blowfish" >> $directory/$filename-keys/$layer
 echo "rm $filename.nc" >> $directory/$filename-keys/$layer
 }

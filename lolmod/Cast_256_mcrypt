@@ -5,11 +5,11 @@ function f_cypher_Cast_256_mcrypt {
 ####################   CRYPT   ####################
 echo "crypting file using with Cast256 - mcrypt"
 f_randpass 800 0
-mcrypt --no-openpgp -q $filename -k $frandom -a cast-256 2>>/dev/null
-mv $filename.nc $filename
+mcrypt --no-openpgp -q "$directory/$filename" -k "$frandom" -a cast-256 2>>/dev/null
+mv $directory/$filename.nc $directory/$filename
 ###################   DECRYPT   ###################
 echo "echo \"decrypting layer $layer using using Cast256 - mcrypt\"" >> $directory/$filename-keys/$layer
-echo "mv $directory/$filename $directory/$filename.nc" >> $directory/$filename-keys/$layer
-echo "mcrypt --no-openpgp -q -d $filename.nc -k $frandom -a cast-256 2>>/dev/null" >> $directory/$filename-keys/$layer
+echo "mv $filename $filename.nc" >> $directory/$filename-keys/$layer
+echo "mcrypt --no-openpgp -q -d \"$filename.nc\" -k \"$frandom\" -a cast-256 2>>/dev/null" >> $directory/$filename-keys/$layer
 echo "rm $filename.nc" >> $directory/$filename-keys/$layer
 }

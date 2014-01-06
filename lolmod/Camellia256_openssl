@@ -1,0 +1,14 @@
+#!/bin/bash
+dependencies="openssl"
+f_dependency
+function f_cypher_Camellia256_openssl {
+####################   CRYPT   ####################
+echo "crypting file using using Camellia256_openssl"
+f_randpass 256 0
+openssl enc -camellia-256-cbc -salt -pass pass:"$frandom" -in "$directory/$filename" -out "$directory/$filename.crypt"
+mv $directory/$filename.crypt $directory/$filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using Camellia256_openssl\"" >> $directory/$filename-keys/$layer
+echo "openssl enc -d -camellia-256-cbc -pass pass:\"$frandom\" -in \"$filename\" -out \"$filename.decrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $filename.decrypt $filename" >> $directory/$filename-keys/$layer
+}

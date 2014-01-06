@@ -1,0 +1,14 @@
+#!/bin/bash
+dependencies="ccrypt"
+f_dependency
+function f_cypher_ccrypt {
+####################   CRYPT   ####################
+echo "crypting file using with ccrypt"
+f_randpass 950 0
+ccrypt -e -K "$frandom" -q "$directory/$filename"
+mv $directory/$filename.cpt $directory/$filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using Cast256 - mcrypt\"" >> $directory/$filename-keys/$layer
+echo "mv $filename $filename.cpt" >> $directory/$filename-keys/$layer
+echo "ccrypt -d -K \"$frandom\" -q \"test.cpt\"" >> $directory/$filename-keys/$layer
+}
