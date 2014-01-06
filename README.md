@@ -3,7 +3,7 @@ lol
 
 Lots of Layers - script to crypt a file
 
-The idea begind this script, is that not knowing which vendors/protocols are broken/backdoored/... , Our statistical best bet is to combine as many as possible, resulting in a script key instead of a traditional key - this should be stronger.
+The idea begind this script, is that not knowing which vendors/protocols are broken/backdoored/... , Our statistical best bet is to combine as many as possible, resulting in a script key instead of a traditional key.  This script key is encrypted and password protected with gpg.
 
 Usage: "./lol.sh file"
 
