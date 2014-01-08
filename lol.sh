@@ -9,7 +9,7 @@
 # 0.3.1	Implemented AES256 with openssl - with and without base 64 encoding
 # 0.4	Implemented Cast_256_mcrypt LOKI97_mcrypt Rijndael256_mcrypt Saferplus_mcrypt Serpent_mcrypt Twofish_mcrypt XTEA_mcrypt
 # 0.5	Implemented Camelia_256_openssl and ccrypt
-# 0.6	Ginat Bug-hunt \o/
+# 0.6	Giant Bug-hunt \o/
 # 0.7	Added an entropy method with openssl for alternance with urandom
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -98,7 +98,7 @@ done
 rmdir $directory/$filename-keys
 if [ "$securemode" = "1" ]; then # To secure key script, use:
 	echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
-	shred -n 8 -u $directory/$filename-decrypt.sh
+#	shred -n 8 -u $directory/$filename-decrypt.sh
 fi
 rm ciphers.txt
 }

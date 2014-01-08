@@ -15,6 +15,7 @@ Once the iteration is done, lol.sh compiles all decrypt lines in one key-script,
 Downsides:
 - The encrypted files get much bigger
 - It is cpu intensive
+- The recipient of the file and key must have the same crypto software used as to crypt the file!
 - As usual, if your computer is compromisde, if somebody steals your key, if you loose it,... it's pretty much game over for your data.
 
 Upsides:
