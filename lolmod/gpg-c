@@ -1,0 +1,15 @@
+#!/bin/bash
+dependencies="gpg"
+f_dependency
+function f_cypher_gpg-c {
+####################   CRYPT   ####################
+echo "crypting file using with gpg"
+f_randpass 950 0
+echo "$frandom" | gpg --passphrase-fd 0 -r USER -c $directory/$filename
+mv $directory/$filename.gpg $directory/$filename
+###################   DECRYPT   ###################
+echo "echo \"decrypting layer $layer using using gpg\"" >> $directory/$filename-keys/$layer
+echo "mv $filename $filename.gpg" >> $directory/$filename-keys/$layer
+echo "echo \"$frandom\" | gpg -q --passphrase-fd 0 $directory/$filename.gpg" >> $directory/$filename-keys/$layer
+echo "rm $directory/$filename.gpg" >> $directory/$filename-keys/$layer
+}

@@ -11,6 +11,7 @@
 # 0.5	Implemented Camelia_256_openssl and ccrypt
 # 0.6	Giant Bug-hunt \o/
 # 0.7	Added an entropy method with openssl for alternance with urandom
+# 0.8 	Added gpg
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename=$1
