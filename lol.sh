@@ -23,6 +23,8 @@
 # - Be consistent with your test statements. Either use [, or use [[
 # - drop into #bash for scripting best practices
 # - Use more quotes.
+=======
+# 0.8 	Added gpg
 ########################
 directory="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 filename="$1"
