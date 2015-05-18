@@ -51,7 +51,7 @@ if [[ "$deps_ok" = "YES" ]]; then
 fi
 }
 
-for lolmod in $(ls "$directory/lolmod"); #load ciphers (each cipher must add itself to the list)
+for lolmod in $(ls "$directory/lolmod|shuf"); #load ciphers (each cipher must add itself to the list)
 do
 	source "$directory/lolmod/$lolmod"
 done
