@@ -109,8 +109,14 @@ do
 done
 rmdir "$directory/$filename-keys"
 if [[ "$securemode" = "1" ]]; then # To secure key script, use:
-        echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
-	shred -n 8 -u "$directory/$filename-decrypt.sh"
+	opsys=$(uname)
+	if [[ "$opsys" = "FreeBSD" ]];then
+		echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; gsed -i s:XX:$(stat -f %z $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -o $directory/$filename-decrypt-secure.sh -c $directory/$filename-decrypt.sh;chmod +x $directory/$filename-decrypt-secure.sh
+		gshred -z -n 8 -u "$directory/$filename-decrypt.sh"
+	elif [[ "$opsys" = "Linux" ]];then
+		echo "eval \"\$(dd if=\$0 bs=1 skip=XX 2>/dev/null|gpg -d 2>/dev/null)\"; exit" > $directory/$filename-decrypt-secure.sh; sed -i s:XX:$(stat -c%s $directory/$filename-decrypt-secure.sh): $directory/$filename-decrypt-secure.sh; gpg -c < $directory/$filename-decrypt.sh >> $directory/$filename-decrypt-secure.sh; chmod +x $directory/$filename-decrypt-secure.sh # thanks to rodolfoap (http://www.commandlinefu.com/commands/view/11985/encrypt-and-password-protect-execution-of-any-bash-script)
+		shred -n 8 -u "$directory/$filename-decrypt.sh"
+	fi
 fi
 rm "$directory/ciphers.txt"
 }
